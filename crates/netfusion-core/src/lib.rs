@@ -9,8 +9,7 @@
 //! - Health scoring and path selection
 //! - Tunnel management
 
-/// Interface discovery engine.
-pub mod discovery {}
+pub mod discovery;
 
 /// Routing engine and policy management.
 pub mod routing {}

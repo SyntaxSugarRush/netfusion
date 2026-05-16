@@ -79,11 +79,12 @@ pub struct IpInfo {
 }
 
 /// Duplex mode of an interface.
-#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Default)]
 #[serde(rename_all = "snake_case")]
 pub enum Duplex {
     Full,
     Half,
+    #[default]
     Unknown,
 }
 
@@ -97,7 +98,7 @@ pub enum LinkState {
 }
 
 /// Wireless-specific interface metrics.
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct WirelessInfo {
     /// Signal strength in dBm.
     pub signal_dbm: Option<i8>,

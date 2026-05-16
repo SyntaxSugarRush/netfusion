@@ -17,6 +17,7 @@ async-trait.workspace = true
 serde.workspace = true
 
 rtnetlink.workspace = true
+netlink-packet-route = "0.19"
 ethtool.workspace = true
 socket2.workspace = true
 nix.workspace = true
