@@ -1,0 +1,29 @@
+[package]
+name = "netfusion-daemon"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "NetFusion core daemon — manages interfaces, routing, bonding, and tunnels"
+
+[[bin]]
+name = "netfusiond"
+path = "src/main.rs"
+
+[dependencies]
+netfusion-shared = { path = "../netfusion-shared" }
+netfusion-core = { path = "../netfusion-core" }
+
+tokio.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+toml.workspace = true
+bincode.workspace = true
+notify.workspace = true
+rusqlite.workspace = true
+chrono.workspace = true
+crossterm.workspace = true

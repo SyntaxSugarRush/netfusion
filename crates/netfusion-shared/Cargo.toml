@@ -1,0 +1,17 @@
+[package]
+name = "netfusion-shared"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Shared types, IPC protocol, and configuration for NetFusion"
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+toml.workspace = true
+thiserror.workspace = true
+validator.workspace = true
+chrono.workspace = true
+uuid.workspace = true
+bincode.workspace = true
