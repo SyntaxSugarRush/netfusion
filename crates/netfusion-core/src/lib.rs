@@ -14,6 +14,7 @@ pub mod discovery;
 pub mod error;
 pub mod health;
 pub mod monitoring;
+pub mod qos;
 pub mod routing;
 pub mod state;
 

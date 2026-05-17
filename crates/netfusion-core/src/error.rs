@@ -24,6 +24,18 @@ pub enum CoreError {
 
     #[error("configuration error: {0}")]
     Config(String),
+
+    #[error("QoS error: {0}")]
+    Qos(String),
+
+    #[error("internal error: {0}")]
+    Internal(String),
+}
+
+impl From<std::io::Error> for CoreError {
+    fn from(e: std::io::Error) -> Self {
+        CoreError::Internal(e.to_string())
+    }
 }
 
 /// Errors during interface discovery.

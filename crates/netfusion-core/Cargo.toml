@@ -27,3 +27,6 @@ zbus.workspace = true
 rusqlite.workspace = true
 chrono.workspace = true
 metrics.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true
