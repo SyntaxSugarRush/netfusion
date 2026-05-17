@@ -19,4 +19,4 @@ pub mod routing;
 pub mod state;
 
 /// Tunnel management (WireGuard, QUIC, relay).
-pub mod tunnels {}
+pub mod tunnels;

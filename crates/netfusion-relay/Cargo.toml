@@ -24,3 +24,6 @@ quinn.workspace = true
 rustls.workspace = true
 chrono.workspace = true
 futures.workspace = true
+toml = "0.8"
+rcgen = "0.14"
+rustls-pemfile = "2"
