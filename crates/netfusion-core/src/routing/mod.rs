@@ -6,6 +6,7 @@
 
 mod engine;
 mod safe_apply;
+pub mod balancer;
 
 pub use engine::RoutingEngine;
 pub use safe_apply::{SafeApply, ApplyResult};
