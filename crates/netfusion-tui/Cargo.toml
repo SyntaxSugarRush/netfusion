@@ -12,6 +12,7 @@ path = "src/main.rs"
 
 [dependencies]
 netfusion-shared = { path = "../netfusion-shared" }
+netfusion-daemon = { path = "../netfusion-daemon" }
 
 tokio.workspace = true
 thiserror.workspace = true

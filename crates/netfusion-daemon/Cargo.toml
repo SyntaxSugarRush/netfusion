@@ -10,6 +10,10 @@ description = "NetFusion core daemon — manages interfaces, routing, bonding, a
 name = "netfusiond"
 path = "src/main.rs"
 
+[lib]
+name = "netfusion_daemon"
+path = "src/lib.rs"
+
 [dependencies]
 netfusion-shared = { path = "../netfusion-shared" }
 netfusion-core = { path = "../netfusion-core" }
@@ -27,3 +31,4 @@ notify.workspace = true
 rusqlite.workspace = true
 chrono.workspace = true
 crossterm.workspace = true
+validator.workspace = true
