@@ -5,6 +5,7 @@
 //! Manages network interfaces, routing, bonding, tunnels,
 //! and serves the IPC endpoint for the TUI frontend.
 
+mod config_watcher;
 mod ipc;
 
 use std::sync::Arc;
@@ -14,10 +15,12 @@ use netfusion_shared::config::NetfusionConfig;
 use netfusion_shared::events::NetfusionEvent;
 use netfusion_shared::types::InterfaceInfo;
 use netfusion_core::discovery::InterfaceScanner;
+use netfusion_core::state::StateStore;
 use tokio::sync::{broadcast, RwLock};
 use tokio::time::{interval, Duration};
 use tracing::{error, info, warn};
 
+use crate::config_watcher::ConfigWatcher;
 use crate::ipc::IpcServer;
 
 const DEFAULT_SOCKET_PATH: &str = "/run/netfusion/netfusion.sock";
@@ -37,6 +40,19 @@ async fn main() -> Result<()> {
 
     // Load configuration
     let config = load_config().await?;
+
+    // Open state store
+    let state_path = config.daemon.state_path.clone();
+    let _state_store = match StateStore::open(&state_path) {
+        Ok(store) => {
+            info!("State store opened at {}", state_path);
+            Some(Arc::new(std::sync::Mutex::new(store)))
+        }
+        Err(e) => {
+            warn!("Failed to open state store: {}", e);
+            None
+        }
+    };
 
     // Shared state
     let interfaces: Arc<RwLock<Vec<InterfaceInfo>>> = Arc::new(RwLock::new(Vec::new()));
@@ -107,6 +123,17 @@ async fn main() -> Result<()> {
             error!("IPC server error: {}", e);
         }
     });
+
+    // Start config file watcher
+    let config_watcher = Arc::new(ConfigWatcher::new(
+        "/etc/netfusion/netfusion.toml".into(),
+        config_store.clone(),
+        event_tx.clone(),
+    ));
+
+    if let Err(e) = config_watcher.start() {
+        warn!("Config watcher failed: {}", e);
+    }
 
     info!("NetFusion daemon ready");
 
