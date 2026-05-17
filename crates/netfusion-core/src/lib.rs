@@ -15,9 +15,7 @@ pub mod error;
 pub mod health;
 pub mod monitoring;
 pub mod routing;
+pub mod state;
 
 /// Tunnel management (WireGuard, QUIC, relay).
 pub mod tunnels {}
-
-/// State persistence and crash recovery.
-pub mod state {}
