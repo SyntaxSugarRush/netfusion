@@ -9,16 +9,12 @@
 //! - Health scoring and path selection
 //! - Tunnel management
 
+pub mod bonding;
 pub mod discovery;
 pub mod error;
 pub mod health;
 pub mod monitoring;
-
-/// Routing engine and policy management.
-pub mod routing {}
-
-/// Bonding and aggregation modes.
-pub mod bonding {}
+pub mod routing;
 
 /// Tunnel management (WireGuard, QUIC, relay).
 pub mod tunnels {}
