@@ -8,7 +8,7 @@ use netfusion_shared::ipc::{
     DaemonRequest, DaemonResponse, ResponseData, WireRequest,
     WireResponse,
 };
-use netfusion_shared::types::InterfaceInfo;
+use netfusion_shared::types::{BondState, InterfaceInfo, TunnelState};
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::UnixStream;
 use thiserror::Error;
@@ -107,6 +107,32 @@ impl IpcClient {
             } => Ok(interfaces),
             DaemonResponse::Ok { .. } => Err(IpcError::Server(
                 "unexpected response type for GetInterfaces".into(),
+            )),
+            DaemonResponse::Error { message, .. } => Err(IpcError::Server(message)),
+        }
+    }
+
+    /// Get all bond group states.
+    pub async fn get_bonds(&mut self) -> Result<Vec<BondState>, IpcError> {
+        match self.request(DaemonRequest::GetBonds).await? {
+            DaemonResponse::Ok {
+                data: Some(ResponseData::Bonds(bonds)),
+            } => Ok(bonds),
+            DaemonResponse::Ok { .. } => Err(IpcError::Server(
+                "unexpected response type for GetBonds".into(),
+            )),
+            DaemonResponse::Error { message, .. } => Err(IpcError::Server(message)),
+        }
+    }
+
+    /// Get all tunnel states.
+    pub async fn get_tunnels(&mut self) -> Result<Vec<TunnelState>, IpcError> {
+        match self.request(DaemonRequest::GetTunnels).await? {
+            DaemonResponse::Ok {
+                data: Some(ResponseData::Tunnels(tunnels)),
+            } => Ok(tunnels),
+            DaemonResponse::Ok { .. } => Err(IpcError::Server(
+                "unexpected response type for GetTunnels".into(),
             )),
             DaemonResponse::Error { message, .. } => Err(IpcError::Server(message)),
         }
